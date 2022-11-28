@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="all" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="pragma" Content="no-cach" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="HandheldFriendly" content="true" />
+	<title>互动抽奖</title>
+	<style>
+		*{
+			-moz-user-select: none; 
+			-webkit-user-select: none; 
+			-ms-user-select: none; 
+			-khtml-user-select: none; 
+			user-select: none;
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			padding: 50px;
+		}
+	</style>
+</head>
+<body id="container">
+	<canvas id="sign"></canvas>
+	<br/>
+	<button id="createPhoto">
+		生成图片
+	</button>
+	<button id="clearPhoto">
+		清除画布
+	</button>
+	<br/>
+	<img src="" alt="" id="result">
+	<script>
+		window.onload = function () {
+			const canvas = document.getElementById('sign')
+			const createPhoto = document.getElementById('createPhoto')
+			const result = document.getElementById('result')
+			const clearPhoto = document.getElementById('clearPhoto')
+			const ctx = canvas.getContext('2d')
+			let lineColor = '#000'
+			let lineWidth = 2
+			let x = canvas.offsetLeft,
+					y = canvas.offsetTop
+			console.log(x, y)
+			canvas.width = 300
+			canvas.height = 300
+
+			init()
+			if (!ctx) return
+			let xStart = yStart = xEnd = yEnd = 0
+			let isDraw = false
+			canvas.addEventListener('touchstart', () => start(event),false)
+			canvas.addEventListener('touchmove', () => move(event),false)
+			canvas.addEventListener('touchend', () => end(event), false)
+
+			canvas.addEventListener('mousedown', () => start(event),false)
+			canvas.addEventListener('mousemove', () => move(event) ,false)
+			canvas.addEventListener('mouseup', () => end(event) ,false)
+
+			/* 鼠标按下 */
+			function start(event) {
+				event.preventDefault()
+					xStart = event.pageX || event.targetTouches[0].pageX
+					yStart = event.pageY || event.targetTouches[0].pageY
+					isDraw = true
+			}
+			/* 鼠标移动 */
+			function move(event) {
+				event.preventDefault()
+				if(!isDraw) return
+				drawLine(ctx,lineColor, lineWidth, xStart, yStart, event.pageX || event.targetTouches[0].pageX, event.pageY || event.targetTouches[0].pageY)
+				xStart = event.pageX || event.targetTouches[0].pageX
+				yStart = event.pageY || event.targetTouches[0].pageY
+			}
+			/* 鼠标离开 */
+			function end(event){
+				event.preventDefault()
+				isDraw = false
+			}
+
+			/* 创建画布 */
+			function drawLine (context, lineColor, lineWidth, xStart, yStart, xEnd, yEnd) {
+				// console.log(context, lineColor, lineWidth, xStart, yStart, xEnd, yEnd)
+				ctx.beginPath()
+				ctx.strokeStyle = lineColor
+				ctx.lineWidth = lineWidth
+				ctx.moveTo(xStart - x, yStart - y)
+				ctx.lineTo(xEnd - x, yEnd - y)
+				ctx.stroke()
+			}
+			/* 初始化画布 */
+			function init() {
+				ctx.fillStyle = '#ddd'
+				ctx.fillRect(0, 0, canvas.width, canvas.height)
+			}
+
+			/* 生成图片 */
+			createPhoto.addEventListener('click', function () {
+				result.src = canvas.toDataURL('image/png')
+			})
+			/* 清空画布 */
+			clearPhoto.addEventListener('click', function () {
+				init()
+			})
+			
+		}
+
+		function createSign (id) {
+
+		}
+
+	</script>
+	<script src="https://s.url.cn/qqun/qun/qqweb/m/qun/confession/js/vconsole.min.js "></script>
+</body>
+</html>  

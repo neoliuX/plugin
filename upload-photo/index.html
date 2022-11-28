@@ -74,6 +74,7 @@
 			}
 			/* 初始化 */
 			init() {
+				console.log(this.width)
 				this.ctx.fillStyle = '#ddd'
 				this.ctx.fillRect(0, 0, this.width, this.height)
 				this.canvas.addEventListener('touchstart', () => this.start(event),false)
@@ -101,6 +102,7 @@
 			}
 			/* 移动 */
 			move (event) {
+				console.log(9090)
 				event.preventDefault()
 				if(!this.isDraw) return
 				this.drawLine(this.xStart, this.yStart, event.pageX || event.targetTouches[0].pageX, event.pageY || event.targetTouches[0].pageY)
@@ -109,6 +111,7 @@
 			}
 			/* 离开 */
 			end (event) {
+				console.log(9090)
 				this.isDraw = false
 			}
 			/* 清楚 */
@@ -123,6 +126,6 @@
 		}
 		
 	</script>
-	<!-- <script src="https://s.url.cn/qqun/qun/qqweb/m/qun/confession/js/vconsole.min.js "></script> -->
+	<script src="https://s.url.cn/qqun/qun/qqweb/m/qun/confession/js/vconsole.min.js "></script>
 </body>
 </html>  
